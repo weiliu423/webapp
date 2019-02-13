@@ -1,0 +1,17 @@
+{
+  "main.css": "/webapp/static/css/main.4a77c290.chunk.css",
+  "main.js": "/webapp/static/js/main.5fc51d2b.chunk.js",
+  "main.js.map": "/webapp/static/js/main.5fc51d2b.chunk.js.map",
+  "static/css/1.4ad28dfe.chunk.css": "/webapp/static/css/1.4ad28dfe.chunk.css",
+  "static/js/1.4de6def1.chunk.js": "/webapp/static/js/1.4de6def1.chunk.js",
+  "static/js/1.4de6def1.chunk.js.map": "/webapp/static/js/1.4de6def1.chunk.js.map",
+  "runtime~main.js": "/webapp/static/js/runtime~main.65c26c62.js",
+  "runtime~main.js.map": "/webapp/static/js/runtime~main.65c26c62.js.map",
+  "static/media/mdb.css": "/webapp/static/media/Roboto-Bold.e31fcf18.ttf",
+  "static/media/all.min.css": "/webapp/static/media/fa-brands-400.4b115e11.woff2",
+  "static/css/main.4a77c290.chunk.css.map": "/webapp/static/css/main.4a77c290.chunk.css.map",
+  "static/css/1.4ad28dfe.chunk.css.map": "/webapp/static/css/1.4ad28dfe.chunk.css.map",
+  "index.html": "/webapp/index.html",
+  "precache-manifest.e327ada7d73f0fec86224501f0512c06.js": "/webapp/precache-manifest.e327ada7d73f0fec86224501f0512c06.js",
+  "service-worker.js": "/webapp/service-worker.js"
+}
