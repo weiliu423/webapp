@@ -4,7 +4,7 @@ import { Badge } from 'reactstrap';
 
 class Post extends Component {
 
-    state = { post: null }
+    state = { post: null };
 
     componentDidMount() {
         axios.get('https://baconipsum.com/api/?type=meat-and-filler&paras=4&format=text')
