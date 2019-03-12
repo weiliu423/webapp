@@ -2,19 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import {Login} from './Login';
+import {SignUp} from './SignUp';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+} from 'react-router-dom';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
+import './App.css'
 
 ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
-
+    <Router>
+        <div>
+            <Route exact path="/" component={App}/>
+            <Route exact path="/login" component={Login}/>
+            <Route exact path="/signup" component={SignUp}/>
+        </div>
+    </Router>
     , document.getElementById('root'));
-
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA

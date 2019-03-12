@@ -30,3 +30,6 @@
     transform: rotate(360deg);
   }
 }
+.mt-10 {
+  padding-top: 25px;
+}

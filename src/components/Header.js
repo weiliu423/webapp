@@ -22,7 +22,7 @@ class NavbarPage extends Component {
                 <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
                     <MDBNavbarNav left>
                         <MDBNavItem active>
-                            <MDBNavLink to="#!">Home</MDBNavLink>
+                            <MDBNavLink to="/">Home</MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
                             <MDBNavLink to="#!">Place your services</MDBNavLink>
@@ -51,8 +51,8 @@ class NavbarPage extends Component {
                                     <MDBIcon icon="user" />
                                 </MDBDropdownToggle>
                                 <MDBDropdownMenu className="dropdown-default" right>
-                                    <MDBDropdownItem href="#!">Login</MDBDropdownItem>
-                                    <MDBDropdownItem href="#!">Sign up</MDBDropdownItem>
+                                    <MDBDropdownItem href="/login">Login</MDBDropdownItem>
+                                    <MDBDropdownItem href="/signup">Sign up</MDBDropdownItem>
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </MDBNavItem>
