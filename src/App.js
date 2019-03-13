@@ -10,7 +10,7 @@ export default class App extends Component {
         <Fragment>
             <NavbarPage />
             <SearchPage />
-            <div className="container">
+            <div className="container mb-10">
                 <ServiceCard/>
             </div>
             <FooterPage/>
