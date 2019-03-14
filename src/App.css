@@ -31,8 +31,21 @@
   }
 }
 .mt-10 {
-  padding-top: 25px;
+  padding-top: 3vw;
 }
 .mb-10 {
   padding-bottom: 5vw;
+}
+.ml-10 {
+  padding-left: 5vw;
+}
+.mr-10 {
+  padding-right: 5vw;
+}
+.img-size{
+  height: 30vw;
+  width: 40vw;
+}
+.imgc-size{
+  width: 60vw;
 }

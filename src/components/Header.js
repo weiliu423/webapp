@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
     MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon } from "mdbreact";
+import {CategoryListPage} from '../CategoryListPage';
 
 class NavbarPage extends Component {
     state = {
         isOpen: false,
-        collapsed: false
+        collapsed: false,
+        clicked: false
     };
 
     toggleCollapse = () => {
         this.setState({ isOpen: !this.state.isOpen });
     };
-
+    toggleClicked = () => {
+        console.log("in header "+ this.state.clicked);
+        this.setState({ clicked: !this.state.clicked });
+    };
     render() {
         return (
             <MDBNavbar color="blue" dark expand="md">
@@ -28,17 +33,7 @@ class NavbarPage extends Component {
                             <MDBNavLink to="#!">Place your services</MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <MDBDropdown>
-                                <MDBDropdownToggle nav caret>
-                                    <div className="d-none d-md-inline">Services</div>
-                                </MDBDropdownToggle>
-                                <MDBDropdownMenu className="dropdown-default" right>
-                                    <MDBDropdownItem href="#!">Courses</MDBDropdownItem>
-                                    <MDBDropdownItem href="#!">Tutors</MDBDropdownItem>
-                                    <MDBDropdownItem href="#!">Repairs</MDBDropdownItem>
-                                    <MDBDropdownItem href="#!">Electrician</MDBDropdownItem>
-                                </MDBDropdownMenu>
-                            </MDBDropdown>
+                            <MDBNavLink to="/servicelist" onClick={this.toggleClicked}>Services</MDBNavLink>
                         </MDBNavItem>
                     </MDBNavbarNav>
                     <MDBNavbarNav right>
@@ -51,8 +46,8 @@ class NavbarPage extends Component {
                                     <MDBIcon icon="user" />
                                 </MDBDropdownToggle>
                                 <MDBDropdownMenu className="dropdown-default" right>
-                                    <MDBDropdownItem href="/login">Login</MDBDropdownItem>
-                                    <MDBDropdownItem href="/signup">Sign up</MDBDropdownItem>
+                                    <MDBDropdownItem href="/webapp/login">Login</MDBDropdownItem>
+                                    <MDBDropdownItem href="/webapp/signup">Sign up</MDBDropdownItem>
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </MDBNavItem>

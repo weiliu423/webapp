@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import {Login} from './Login';
 import {SignUp} from './SignUp';
+import {CategoryListPage} from './CategoryListPage';
+import {CoursePage} from './CoursePage'
 import * as serviceWorker from './serviceWorker';
 import {
     BrowserRouter as Router,
@@ -15,11 +17,13 @@ import 'mdbreact/dist/css/mdb.css';
 import './App.css'
 
 ReactDOM.render(
-    <Router>
+    <Router basename="/webapp">
         <div>
             <Route exact path="/" component={App}/>
             <Route exact path="/login" component={Login}/>
             <Route exact path="/signup" component={SignUp}/>
+            <Route exact path="/servicelist" component={CategoryListPage}/>
+            <Route exact path="/servicelist/courses" component={CoursePage}/>
         </div>
     </Router>
     , document.getElementById('root'));
