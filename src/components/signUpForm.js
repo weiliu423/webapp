@@ -1,6 +1,7 @@
 import React from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
+
 import SpinnerPage from './SpinnerPage';
+
 
 export default class signFormPage extends React.Component {
     constructor(props) {

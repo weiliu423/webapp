@@ -111,7 +111,7 @@ export default class LoginFormPage extends React.Component {
                         </div>
                     </div>
                     <button className="btn btn-info btn-block my-4" type="submit">Sign in</button>
-                    <p>Not a member?<a href="/signup">Register</a></p>
+                    <p>Not a member?<a href="/webapp/signup">Register</a></p>
                     <label className={"error"}>{this.state.result}</label>
                     <br />
                     {this.loginloading()}

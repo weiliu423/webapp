@@ -30,7 +30,7 @@ class NavbarPage extends Component {
                             <MDBNavLink to="/">Home</MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <MDBNavLink to="#!">Place your services</MDBNavLink>
+                            <MDBNavLink to="/uploadservice">Place your services</MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
                             <MDBNavLink to="/servicelist" onClick={this.toggleClicked}>Services</MDBNavLink>

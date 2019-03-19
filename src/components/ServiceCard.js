@@ -8,14 +8,10 @@ import electrician from '../img/electrician.png'
 
 
 import {
-    Button, UncontrolledAlert, Card, CardImg, CardBody,
-    CardTitle, CardSubtitle, CardText
+    Button, Card, CardImg, CardBody,
+    CardTitle
 } from 'reactstrap';
 
-
-/*error message handly in future/*<UncontrolledAlert color="danger" className="d-none d-lg-block">
-            <strong>Account not activated.</strong>
-        </UncontrolledAlert>*/
 
 const ServiceCard = () => (
     <div >
