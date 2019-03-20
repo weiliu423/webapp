@@ -104,12 +104,12 @@ self.__precacheManifest = [
     "url": "/webapp/static/media/fa-solid-900.82905d8d.svg"
   },
   {
-    "revision": "11911410dca2de148f30954eb2fd5eab",
-    "url": "/webapp/static/media/arrow_left.11911410.svg"
-  },
-  {
     "revision": "8ef6a08cdc1154920165680a4edde771",
     "url": "/webapp/static/media/arrow_right.8ef6a08c.svg"
+  },
+  {
+    "revision": "11911410dca2de148f30954eb2fd5eab",
+    "url": "/webapp/static/media/arrow_left.11911410.svg"
   },
   {
     "revision": "dfe56a876d0282555d1e2458e278060f",
@@ -192,7 +192,7 @@ self.__precacheManifest = [
     "url": "/webapp/static/media/Roboto-Bold.e31fcf18.ttf"
   },
   {
-    "revision": "17b83a799b76e628968fbf7a2d82f3cf",
+    "revision": "a186a018e93ba490a397b093d1b189fc",
     "url": "/webapp/index.html"
   }
 ];
