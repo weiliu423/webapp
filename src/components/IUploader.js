@@ -220,7 +220,7 @@ export default class Uploader extends Component {
                             <div className="md-form">
                                 <label htmlFor="form7">DESCRIPTION :</label>
                                 <br/>
-                                <textarea id="form7" className="md-textarea form-control" rows="8" value={this.state.description} onChange={this.handledescriptionChange}/>
+                                <textarea id="form7" className="md-textarea form-control" rows="8" placeholder="MAX characters - 350" value={this.state.description} onChange={this.handledescriptionChange}/>
                             </div>
                             <br />
                         </div>
