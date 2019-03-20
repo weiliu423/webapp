@@ -19,7 +19,7 @@ export default class Uploader extends Component {
             description: '',
             email: '',
             phone: '',
-            type: '',
+            type: 'Choose a category',
             submitted: false
         };
         this.handletitleChange = this.handletitleChange.bind(this);
@@ -66,7 +66,7 @@ export default class Uploader extends Component {
         });
     }
     handledescriptionChange(event) {
-        if(event.target.value.length < 325)
+        if(event.target.value.length < 500)
         {
             this.setState({
                 description: event.target.value
@@ -106,7 +106,7 @@ export default class Uploader extends Component {
                     body: JSON.stringify({
                         Name: this.state.titleService,
                         TypeName: this.state.type,
-                        LinkAccountId: 1,
+                        LinkAccountId: 2,
                         Description: this.state.description,
                         ImageLink: this.state.uploadedFileCloudinaryUrl
                     })
@@ -220,13 +220,13 @@ export default class Uploader extends Component {
                             <div className="md-form">
                                 <label htmlFor="form7">DESCRIPTION :</label>
                                 <br/>
-                                <textarea id="form7" className="md-textarea form-control" rows="8" placeholder="MAX characters - 350" value={this.state.description} onChange={this.handledescriptionChange}/>
+                                <textarea id="form7" className="md-textarea form-control" rows="8" placeholder="MAX characters - 500" value={this.state.description} onChange={this.handledescriptionChange}/>
                             </div>
                             <br />
                         </div>
-                        <button className="btn btn-info btn-block my-4" type="submit">Upload</button>
-                        <label className={"error"}>{this.state.result}</label>
                     </div>
+                    <button className="btn btn-info btn-block my-4" type="submit">Upload</button>
+                    <label className={"error"}>{this.state.result}</label>
                 </div>
             </form>
             </div>

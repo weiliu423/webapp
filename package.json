@@ -1,8 +1,13 @@
 {
   "name": "webapp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "homepage": "http://weiliu423.github.io/webapp",
+  "headers": {
+    "/**": {
+      "Cache-Control": "no-store, no-cache"
+    }
+  },
   "dependencies": {
     "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",

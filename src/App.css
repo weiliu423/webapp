@@ -55,7 +55,22 @@
   font-weight: bold;
   padding: 5em;
   cursor: pointer;
+  display: flex;
 }
 .error{
   color: red;
+}
+@media only screen and (max-width: 600px) {
+  .DropZone{
+    border: 3px dashed #888;
+    border-radius: 4px;
+    color: #aaa;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 2em;
+    cursor: pointer;
+    display: flex;
+    margin-bottom: 2vw;
+  }
 }
