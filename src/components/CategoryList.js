@@ -17,8 +17,7 @@ export class CategoryList extends Component {
                 <MDBListGroup>
                     <div className="list-group-flush ml-10 mr-10">
                         <div className="list-group-item">
-                            <MDBListGroupItem href="/servicelist/courses"><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 red p-3 white-text rounded "
-                                                                              aria-hidden="true"/>Courses</p></MDBListGroupItem>
+                            <MDBListGroupItem href="/webapp/servicelist/courses"><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 red p-3 white-text rounded " aria-hidden="true"/>Courses</p></MDBListGroupItem>
                         </div>
                         <div className="list-group-item">
                             <MDBListGroupItem href="#"><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 mr-4 orange p-3 white-text rounded"

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import request from 'superagent';
-import { StyledDropZone } from 'react-drop-zone'
-import 'react-drop-zone/dist/styles.css'
+import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
+import {StyledDropZone }  from 'react-drop-zone'
+
 
 const CLOUDINARY_UPLOAD_PRESET = 'lshserviceupload';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/predator423/image/upload/';
@@ -16,13 +17,18 @@ export default class Uploader extends Component {
             result: '',
             titleService: '',
             description: '',
+            email: '',
+            phone: '',
+            type: '',
             submitted: false
         };
         this.handletitleChange = this.handletitleChange.bind(this);
         this.handledescriptionChange = this.handledescriptionChange.bind(this);
         this.handleUploadSubmit = this.handleUploadSubmit.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
         this.onShow = this.onShow.bind(this);
     }
+
     onShow = ()=> {
         this.setState({ show: true })
     };
@@ -33,11 +39,26 @@ export default class Uploader extends Component {
         this.setState({ submitted: true })
     };
     onImageDrop(files) {
-
-        this.setState({
-            uploadedFile: files
-        });
-        this.handleImageUpload(files);
+        var ext = files.name.substr(files.name.lastIndexOf('.') + 1);
+        console.log(ext);
+        if(ext === "png" ||ext === "jpg"||ext === "jpeg" ) {
+            this.setState({
+                uploadedFile: files
+            });
+            let reader = new FileReader();
+            let file = this.state.uploadedFile;
+            reader.onloadend = () => {
+                this.setState({
+                    file: file,
+                    imagePreviewUrl: reader.result
+                });
+            };
+            reader.readAsDataURL(file);
+            this.onHide();
+            console.log(this.state.uploadedFile);
+        }else {
+            alert('Invalid file format for image');
+        }
     }
     handletitleChange(event) {
         this.setState({
@@ -45,9 +66,15 @@ export default class Uploader extends Component {
         });
     }
     handledescriptionChange(event) {
-        this.setState({
-            description: event.target.value
-        });
+        if(event.target.value.length < 325)
+        {
+            this.setState({
+                description: event.target.value
+            });
+        }else{
+            alert('Error occurred: Max character reached');
+        }
+
     }
     handleImageUpload(file) {
         let upload = request.post(CLOUDINARY_UPLOAD_URL)
@@ -62,13 +89,71 @@ export default class Uploader extends Component {
                 this.setState({
                     uploadedFileCloudinaryUrl: response.body.secure_url
                 });
-                this.onHide();
+                console.log("Img_link: " + response.body.secure_url);
+                console.log(
+                    "Name:"+ this.state.titleService +
+                    "\nTypeName:" + this.state.type +
+                    "\nLinkAccountId:" + 1 +
+                    "\nDescription:" + this.state.description +
+                    "\nImageLink: " + this.state.uploadedFileCloudinaryUrl);
+                this.setState({result: "Validating, Please Wait. Thank You\n"});
+                fetch('https://serviceinfo.azurewebsites.net/createService', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        Name: this.state.titleService,
+                        TypeName: this.state.type,
+                        LinkAccountId: 1,
+                        Description: this.state.description,
+                        ImageLink: this.state.uploadedFileCloudinaryUrl
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        response.json().then(json => {
+                            if (json.Success === true) {
+                                setTimeout(function () {
+                                    this.setState({result: "Success"});
+                                    this.setState({
+                                        uploadedFile: null,
+                                        uploadedFileCloudinaryUrl: '',
+                                        show: true,
+                                        titleService: '',
+                                        description: '',
+                                        email: '',
+                                        phone: '',
+                                        type: '',
+                                    });
+                                }.bind(this), 2000);
+                                return true
+                            } else {
+                                setTimeout(function () {
+                                    this.setState({result: "Error occurred"})
+                                }.bind(this), 2000);
+                                return false
+                            }
+                        });
+                    } else {
+                        setTimeout(function () {
+                            this.setState({result: "Error"})
+                        }.bind(this), 2000);
+                        return false
+                    }
+                }).catch(function (ex) {
+                    alert('Error occurred: ' + ex);
+                });
             }
-            console.log("Img_link: " + response.body.secure_url);
+
 
         });
     }
-
+    handleTypeChange(event) {
+        this.setState({
+            type: event.target.value
+        });
+    }
     afterUpload(){
         if(this.state.show)
         {
@@ -77,7 +162,7 @@ export default class Uploader extends Component {
                     <StyledDropZone onDrop={(file) => {this.onImageDrop(file)}}>
                         {
                             ({ over, overDocument }) =>
-                                <div className='drop-zone'>
+                                <div className="text-center">
                                     {
                                         over ?
                                             'file is over element' :
@@ -91,12 +176,13 @@ export default class Uploader extends Component {
                 </div>
             )
         }else {
+
             return(
                 <div>
-                    {this.state.uploadedFileCloudinaryUrl === '' ? null :
+                    {this.state.uploadedFile === '' ? null :
                         <div>
                             <p>{this.state.uploadedFile.name}</p>
-                            <img src={this.state.uploadedFileCloudinaryUrl}  height="200vw" width="200vw" alt={"uploaded"}/>
+                            <img src={this.state.imagePreviewUrl}  height="200vw" width="200vw" alt={"uploaded"}/>
                             <button className="btn btn-info btn-block my-4" onClick={this.onShow}>Re-Upload Image</button>
                         </div>}
                 </div>
@@ -104,50 +190,8 @@ export default class Uploader extends Component {
         }
     };
     handleUploadSubmit(event) {
-        this.onSubmitted();
-        if(this.state.username !== ''|| this.state.password !== '' ) {
-            this.onLoginShow();
-            this.setState({result: "Validating, Please Wait. Thank You\n"});
-            fetch('https://lshapi.azurewebsites.net/accountValidation', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    UserName: this.state.username,
-                    Password: this.state.password
-                })
-            }).then(response => {
-                if (response.ok) {
-                    response.json().then(json => {
-                        if (json.Success === true) {
-                            setTimeout(function () {
-                                this.onLoginHide();
-                                this.setState({result: "Success"});
-                                this.setState({
-                                    redirect: true
-                                });
-                            }.bind(this), 2000);
-                            return true
-                        } else {
-                            setTimeout(function () {
-                                this.onLoginHide();
-                                this.setState({result: "User doesn't exist or Invalid input"})
-                            }.bind(this), 2000);
-                            return false
-                        }
-                    });
-                }else{
-                    setTimeout(function () {
-                        this.onLoginHide();
-                        this.setState({result: "User doesn't exist or Invalid input"})
-                    }.bind(this), 2000);
-                    return false
-                }
-            }).catch(function (ex) {
-                alert('Error occurred: ' + ex);
-            });
+        if(this.state.titleService !== ''|| this.state.description !== '' || this.state.type !== '' ) {
+            this.handleImageUpload(this.state.uploadedFile);
         }else {
             alert('Error occurred: No user input');
         }
@@ -162,15 +206,26 @@ export default class Uploader extends Component {
                         <div className="col-md-6">{this.afterUpload()}</div>
                         <div className="col-md-6">
                             <p className="h4 mb-4">Service Details</p>
-                            <p className="h6 mb-4">Title</p>
-                            <input type="text" id="defaultAdsTitle" className="form-control mb-4" placeholder="" value={this.state.titleService} onChange={this.handletitleChange}/>
-                            <p className="h6 mb-4">Description</p>
-                            <input type="text" id="defaultAdsServiceDes" className="form-control mb-10"
-                                   placeholder="" value={this.state.description} onChange={this.handledescriptionChange}/>
-                            <button className="btn btn-info btn-block my-4" type="submit">Upload</button>
-                            <label className={"error"}>{this.state.result}</label>
+                            <input type="text" id="defaultAdsTitle" className="form-control mb-4" placeholder="TITLE" value={this.state.titleService} onChange={this.handletitleChange}/>
+                            <MDBDropdown>
+                                <MDBDropdownToggle className="btn btn-info btn-block my-4" caret color="primary">
+                                    {this.state.type}
+                                </MDBDropdownToggle>
+                                <MDBDropdownMenu basic>
+                                    <MDBDropdownItem value="Courses" onClick={this.handleTypeChange}>Course</MDBDropdownItem>
+                                    <MDBDropdownItem value="Tutors" onClick={this.handleTypeChange}>Tutor</MDBDropdownItem>
+                                    <MDBDropdownItem value="Repairs" onClick={this.handleTypeChange}>Repairs</MDBDropdownItem>
+                                </MDBDropdownMenu>
+                            </MDBDropdown>
+                            <div className="md-form">
+                                <label htmlFor="form7">DESCRIPTION :</label>
+                                <br/>
+                                <textarea id="form7" className="md-textarea form-control" rows="8" value={this.state.description} onChange={this.handledescriptionChange}/>
+                            </div>
                             <br />
                         </div>
+                        <button className="btn btn-info btn-block my-4" type="submit">Upload</button>
+                        <label className={"error"}>{this.state.result}</label>
                     </div>
                 </div>
             </form>

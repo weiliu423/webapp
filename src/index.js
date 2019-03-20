@@ -15,6 +15,7 @@ import {
     BrowserRouter as Router,
     Route,
 } from 'react-router-dom';
+import 'react-drop-zone/dist/styles.css'
 import './App.css'
 
 
