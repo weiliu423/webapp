@@ -9,6 +9,7 @@ import {Login} from './Login';
 import {SignUp} from './SignUp';
 import {CategoryListPage} from './CategoryListPage';
 import {CoursePage} from './CoursePage'
+import {TutorPage} from './TutorPage'
 import {UploadService} from './UploadService'
 import * as serviceWorker from './serviceWorker';
 
@@ -28,6 +29,7 @@ ReactDOM.render(
             <Route exact path="/signup" component={SignUp}/>
             <Route exact path="/servicelist" component={CategoryListPage}/>
             <Route exact path="/servicelist/courses" component={CoursePage}/>
+            <Route exact path="/servicelist/tutors" component={TutorPage}/>
             <Route exact path="/uploadservice" component={UploadService}/>
         </div>
     </Router>

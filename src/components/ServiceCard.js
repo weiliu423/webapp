@@ -36,7 +36,7 @@ const ServiceCard = () => (
                     <CardBody>
                         <CardTitle className="h4-responsive mb-2s text-secondary">Tutors</CardTitle>
                         <div className="d-flex justify-content-center">
-                            <Button color="success" size="sm" className="font-weight-light">View Services</Button>
+                            <Button href="/webapp/servicelist/tutors" color="success" size="sm" className="font-weight-light">View Services</Button>
                         </div>
                     </CardBody>
                 </Card>

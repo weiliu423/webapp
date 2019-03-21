@@ -4,21 +4,22 @@ import NavbarPage from './components/Header';
 import FooterPage from './components/FooterPage';
 import {ServiceInfo} from "./components/ServiceInfo";
 
-export class CoursePage extends Component {
+export class TutorPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             link: ''
         };
     }
+
     serviceAll =() =>{
         return(
-           <Fragment>
-            <NavbarPage />
-            <SearchPage />
-            <ServiceInfo category={"Courses"}/>
-        <FooterPage/>
-        </Fragment>
+            <Fragment>
+                <NavbarPage />
+                <SearchPage />
+                <ServiceInfo category={"Tutors"}/>
+                <FooterPage/>
+            </Fragment>
         );
     };
 

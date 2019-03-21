@@ -162,13 +162,13 @@ export default class Uploader extends Component {
                     <StyledDropZone onDrop={(file) => {this.onImageDrop(file)}}>
                         {
                             ({ over, overDocument }) =>
-                                <div className="text-center">
+                                <div>
                                     {
                                         over ?
                                             'file is over element' :
                                             overDocument ?
-                                                'Select or Drop your file here' :
-                                                'no file'
+                                                'Select or drop your file here, ideal size 400x400' :
+                                                'Select or drop your file here, ideal size 400x400'
                                     }
                                 </div>
                         }
@@ -190,7 +190,7 @@ export default class Uploader extends Component {
         }
     };
     handleUploadSubmit(event) {
-        if(this.state.titleService !== ''|| this.state.description !== '' || this.state.type !== '' ) {
+        if(this.state.titleService !==  '' && this.state.description !==  '' && this.state.type !== 'Choose a category' ) {
             this.handleImageUpload(this.state.uploadedFile);
         }else {
             alert('Error occurred: No user input');

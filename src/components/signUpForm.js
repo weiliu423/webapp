@@ -146,8 +146,7 @@ export default class signFormPage extends React.Component {
                 <br />
                 {this.loading()}
         <hr/>
-        <p>By clicking <u><em>Sign up</em></u> you agree to our <a href="" target="_blank">terms of service</a>
-    </p>
+        <p>By clicking <u><em>Sign up</em></u> you agree to our <a href="/" target="_blank">terms of service</a></p>
     </form>
     </div>
         );

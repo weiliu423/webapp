@@ -1,13 +1,9 @@
 import React, {Component} from "react";
 import {
-    MDBCarousel,
-    MDBCarouselInner,
-    MDBCarouselItem,
     MDBView,
-    MDBMask,
-    MDBContainer, MDBCard, MDBCardBody, MDBRow, MDBCol, MDBBtn
+    MDBMask, MDBCard, MDBCardBody, MDBRow, MDBCol, MDBBtn
 } from "mdbreact";
-
+const uuidv4 = require('uuid/v4');
 
 export class ServiceInfo extends Component {
     constructor(props) {
@@ -23,57 +19,13 @@ export class ServiceInfo extends Component {
         };
         this.loadAllService();
     }
-    servicePic = () =>{
-        return(
-            <MDBContainer className="d-flex justify-content-center">
-                <MDBCarousel
-                    activeItem={1}
-                    length={3}
-                    showControls={true}
-                    showIndicators={true}
-                    className="z-depth-1 imgc-size">
-                    <MDBCarouselInner>
-                        <MDBCarouselItem itemId="1">
-                            <MDBView>
-                                <img
-                                    className="d-block w-100 img-size"
-                                    src="https://mdbootstrap.com/img/Others/documentation/img%20(136)-mini.jpg"
-                                    alt="First slide"
-                                />
-                                <MDBMask overlay="black-light" />
-                            </MDBView>
-                        </MDBCarouselItem>
-                        <MDBCarouselItem itemId="2">
-                            <MDBView>
-                                <img
-                                    className="d-block w-100 img-size"
-                                    src="https://mdbootstrap.com/img/Others/documentation/img%20(137)-mini.jpg"
-                                    alt="Second slide"
-                                />
-                                <MDBMask overlay="black-strong" />
-                            </MDBView>
-                        </MDBCarouselItem>
-                        <MDBCarouselItem itemId="3">
-                            <MDBView>
-                                <img
-                                    className="d-block w-100 img-size"
-                                    src="https://mdbootstrap.com/img/Others/documentation/img%20(141)-mini.jpg"
-                                    alt="Third slide"
-                                />
-                                <MDBMask overlay="black-slight" />
-                            </MDBView>
-                        </MDBCarouselItem>
-                    </MDBCarouselInner>
-                </MDBCarousel>
-            </MDBContainer>
-        )
-    };
     loadAllService(){
         fetch('https://serviceinfo.azurewebsites.net/getServicesByName/'+this.props.category, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
             }
         }).then(response => {
             if (response.ok) {
@@ -90,31 +42,47 @@ export class ServiceInfo extends Component {
                                        title: json.Data[i].serviceInfo[x].Name,
                                        description: json.Data[i].serviceInfo[x].Description,
                                        createDate: json.Data[i].serviceInfo[x].CreateDate
-                                   })
+                                   });
                                    view.push(this.serviceRows());
                                   // json.Data[i].serviceInfo[x].ImageLink, json.Data[i].serviceInfo[x].Name, json.Data[i].serviceInfo[x].Description, json.Data[i].serviceInfo[x].CreateDate)
                                }
                            }
+
                         this.setState({
                             output: view
                         });
                         return true
                     } else {
-                            this.setState({result: "Error occurred"});
+                            this.setState({output: this.error()});
                         return false
                     }
                 });
             } else {
-                    this.setState({result: "Error"});
+                this.setState({output: this.uploadServiceButton()});
                 return false
             }
         }).catch(function (ex) {
-            alert('Error occurred: ' + ex);
+            alert('Error occur: ' + ex);
         });
     };
+    error(){
+        return(
+            <div className="alert alert-danger text-center" role="alert">
+                Error occurred
+            </div>
+        )
+    }
+     uploadServiceButton(){
+         return(
+             <div className="text-center">
+                 No services submitted, be the first one !
+                <a href="/webapp/uploadservice"> <button className="btn btn-info btn-block my-4">Place your services</button></a>
+             </div>
+         )
+     }
      serviceRows(){
         return(
-            <div>
+            <div key={uuidv4()}>
             <MDBRow>
                 <MDBCol lg="5" xl="4">
                     <MDBView hover className="rounded z-depth-1-half mb-lg-0 mb-4">

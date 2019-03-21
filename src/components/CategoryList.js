@@ -20,7 +20,7 @@ export class CategoryList extends Component {
                             <MDBListGroupItem href="/webapp/servicelist/courses"><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 red p-3 white-text rounded " aria-hidden="true"/>Courses</p></MDBListGroupItem>
                         </div>
                         <div className="list-group-item">
-                            <MDBListGroupItem href="#"><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 mr-4 orange p-3 white-text rounded"
+                            <MDBListGroupItem href="/webapp/servicelist/tutors"><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 mr-4 orange p-3 white-text rounded"
                                                                               aria-hidden="true"/>Tutors</p></MDBListGroupItem>
                         </div>
                         <div className="list-group-item">

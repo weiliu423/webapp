@@ -107,7 +107,7 @@ export default class LoginFormPage extends React.Component {
                             </div>
                         </div>
                         <div>
-                            <a href="">Forgot password?</a>
+                            <a href="/">Forgot password?</a>
                         </div>
                     </div>
                     <button className="btn btn-info btn-block my-4" type="submit">Sign in</button>
