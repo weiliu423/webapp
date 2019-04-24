@@ -1,5 +1,6 @@
 import React from "react";
 import SpinnerPage from "./SpinnerPage";
+import Redirect from "react-router-dom/es/Redirect";
 
 export default class LoginFormPage extends React.Component {
     constructor(props) {
@@ -20,6 +21,9 @@ export default class LoginFormPage extends React.Component {
             window.history.forward()
         }, 0);
         window.onunload= null;
+    }
+    loggedin(){
+        this.props.checkLog(true);
     }
     onLoginShow = ()=> {
         this.setState({ loginshow: true })
@@ -67,7 +71,9 @@ export default class LoginFormPage extends React.Component {
                                     redirect: true
                                 });
                             }.bind(this), 2000);
-                            return true
+                            // eslint-disable-next-line react/jsx-no-undef
+                            this.loggedin(this.state.redirect);
+                            return true;
                         } else {
                             setTimeout(function () {
                                 this.onLoginHide();

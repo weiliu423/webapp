@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
-    MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, Button } from "mdbreact";
+    MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon } from "mdbreact";
 
-class NavbarPage extends Component {
+class NavbarPageLog extends Component {
     state = {
         isOpen: false,
         collapsed: false,
@@ -26,10 +26,10 @@ class NavbarPage extends Component {
                 <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
                     <MDBNavbarNav left>
                         <MDBNavItem active>
-                            <button type="button" className="btn btn-link" onClick={this.props.loadHome}>Home</button>
+                            <MDBNavLink to="/">Home</MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <button type="button" className="btn btn-link" onClick={this.props.loadUploadService}>Place your services</button>
+                            <MDBNavLink to="/uploadservice">Place your services</MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
                             <MDBNavLink to="/servicelist" onClick={this.toggleClicked}>Services</MDBNavLink>
@@ -44,10 +44,9 @@ class NavbarPage extends Component {
                                 <MDBDropdownToggle nav caret>
                                     <MDBIcon icon="user" />
                                 </MDBDropdownToggle>
-                                <MDBDropdownMenu className="dropdown-default" right>
-                                    <MDBDropdownItem href="/webapp/login">Login</MDBDropdownItem>
-                                    <MDBDropdownItem href="/webapp/signup">Sign up</MDBDropdownItem>
-                                </MDBDropdownMenu>
+                                <MDBNavItem>
+                                    <MDBNavLink to="#!">Log out</MDBNavLink>
+                                </MDBNavItem>
                             </MDBDropdown>
                         </MDBNavItem>
                     </MDBNavbarNav>
@@ -57,4 +56,4 @@ class NavbarPage extends Component {
     }
 }
 
-export default NavbarPage;
+export default NavbarPageLog;

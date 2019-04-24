@@ -5,13 +5,6 @@ import FooterPage from './components/FooterPage';
 import {ServiceInfo} from "./components/ServiceInfo";
 
 export class TutorPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            link: ''
-        };
-    }
-
     serviceAll =() =>{
         return(
             <Fragment>

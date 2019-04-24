@@ -60,6 +60,13 @@
 .error{
   color: red;
 }
+.navBtn{
+  background-color: transparent;
+  border: none;
+  outline-color: transparent;
+  border-inline-color: transparent;
+}
+
 @media only screen and (max-width: 600px) {
   .DropZone{
     border: 3px dashed #888;

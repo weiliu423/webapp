@@ -3,6 +3,7 @@ import {
     MDBView,
     MDBMask, MDBCard, MDBCardBody, MDBRow, MDBCol, MDBBtn
 } from "mdbreact";
+import SpinnerPage from "./SpinnerPage";
 const uuidv4 = require('uuid/v4');
 
 export class ServiceInfo extends Component {
@@ -15,10 +16,17 @@ export class ServiceInfo extends Component {
             title: '',
             description: '',
             createDate: '',
-            output:[]
+            output:[],
+            show: false
         };
         this.loadAllService();
     }
+    onShow = ()=> {
+        this.setState({ show: true })
+    };
+    onHide = ()=> {
+        this.setState({ show: false })
+    };
     loadAllService(){
         fetch('https://serviceinfo.azurewebsites.net/getServicesByName/'+this.props.category, {
             method: 'GET',
@@ -31,12 +39,16 @@ export class ServiceInfo extends Component {
             if (response.ok) {
                 response.json().then(json => {
                     if (json.Success === true) {
-                           console.log(json.Data);
+                           //console.log(json.Data);
                            let view = this.state.output;
+                            this.onShow();
+                            this.setState({
+                                output: this.loadingBar()
+                            });
                            for(let i = 0; i < json.Data.length; i++)
                            {
                                for(let x = 0; x < json.Data[i].serviceInfo.length; x++) {
-                                   console.log(json.Data[i].serviceInfo[x]);
+                                   //console.log(json.Data[i].serviceInfo[x]);
                                    this.setState({
                                        ImageLink: json.Data[i].serviceInfo[x].ImageLink,
                                        title: json.Data[i].serviceInfo[x].Name,
@@ -47,38 +59,47 @@ export class ServiceInfo extends Component {
                                   // json.Data[i].serviceInfo[x].ImageLink, json.Data[i].serviceInfo[x].Name, json.Data[i].serviceInfo[x].Description, json.Data[i].serviceInfo[x].CreateDate)
                                }
                            }
-
+                        this.onHide();
                         this.setState({
                             output: view
                         });
                         return true
                     } else {
-                            this.setState({output: this.error()});
+                            this.setState({output: ServiceInfo.error()});
                         return false
                     }
                 });
             } else {
-                this.setState({output: this.uploadServiceButton()});
+                this.setState({output: ServiceInfo.uploadServiceButton()});
                 return false
             }
         }).catch(function (ex) {
             alert('Error occur: ' + ex);
         });
     };
-    error(){
+    static error(){
         return(
             <div className="alert alert-danger text-center" role="alert">
                 Error occurred
             </div>
         )
     }
-     uploadServiceButton(){
+     static uploadServiceButton(){
          return(
              <div className="text-center">
                  No services submitted, be the first one !
                 <a href="/webapp/uploadservice"> <button className="btn btn-info btn-block my-4">Place your services</button></a>
              </div>
          )
+     }
+     loadingBar(){
+        return(
+            <div>
+                <label className={"error"}>{this.state.result}</label>
+                <br />
+                <SpinnerPage />
+            </div>
+        )
      }
      serviceRows(){
         return(

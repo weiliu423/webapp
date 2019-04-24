@@ -35,9 +35,6 @@ export default class Uploader extends Component {
     onHide = ()=> {
         this.setState({ show: false })
     };
-    onSubmitted = ()=> {
-        this.setState({ submitted: true })
-    };
     onImageDrop(files) {
         var ext = files.name.substr(files.name.lastIndexOf('.') + 1);
         console.log(ext);
