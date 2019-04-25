@@ -7,12 +7,7 @@ import 'mdbreact/dist/css/mdb.css';
 import 'react-drop-zone/dist/styles.css'
 import './App.css'
 import App from './App';
-import {Login} from './Login';
-import {SignUp} from './SignUp';
-import {CategoryListPage} from './CategoryListPage';
-import {CoursePage} from './CoursePage'
-import {TutorPage} from './TutorPage'
-import {UploadService} from './UploadService'
+
 import {
     BrowserRouter as Router,
     Route,
@@ -23,12 +18,6 @@ ReactDOM.render(
     <Router basename="/webapp">
         <div>
             <Route exact path="/" component={App}/>
-           {/* <Route exact path="/login" component={Login}/>
-            <Route exact path="/signup" component={SignUp}/>
-            <Route exact path="/servicelist" component={CategoryListPage}/>
-            <Route exact path="/servicelist/courses" component={CoursePage}/>
-            <Route exact path="/servicelist/tutors" component={TutorPage}/>
-            <Route exact path="/uploadservice" component={UploadService}/>*/}
         </div>
     </Router>
     , document.getElementById('root'));

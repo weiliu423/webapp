@@ -42,7 +42,9 @@ export default class signFormPage extends React.Component {
 
         }
     }
-
+    loggedin(){
+        this.props.checkLog(true);
+    }
     handlefNameChange(event) {
         this.setState({
             fName: event.target.value
@@ -96,6 +98,8 @@ export default class signFormPage extends React.Component {
                                     redirect: true
                                 });
                             }.bind(this), 2000);
+                            this.props.setUsername(this.state.username);
+                            this.loggedin(this.state.redirect);
                             return true
                         } else {
                             setTimeout(function () {

@@ -92,6 +92,7 @@ export default class Uploader extends Component {
                     "\nTypeName:" + this.state.type +
                     "\nLinkAccountId:" + 1 +
                     "\nDescription:" + this.state.description +
+                    "\nAccountName:" + this.props.username +
                     "\nImageLink: " + this.state.uploadedFileCloudinaryUrl);
                 this.setState({result: "Validating, Please Wait. Thank You\n"});
                 fetch('https://serviceinfo.azurewebsites.net/createService', {
@@ -105,7 +106,8 @@ export default class Uploader extends Component {
                         TypeName: this.state.type,
                         LinkAccountId: 2,
                         Description: this.state.description,
-                        ImageLink: this.state.uploadedFileCloudinaryUrl
+                        ImageLink: this.state.uploadedFileCloudinaryUrl,
+                        AccountName: this.props.username
                     })
                 }).then(response => {
                     if (response.ok) {

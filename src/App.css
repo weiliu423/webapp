@@ -64,7 +64,13 @@
   background-color: transparent;
   border: none;
   outline-color: transparent;
-  border-inline-color: transparent;
+  padding: 0;
+  padding-top: 0.2vw;
+  text-align: center;
+}
+.nameText{
+  padding-top: 0.4vw;
+  color: yellow;
 }
 
 @media only screen and (max-width: 600px) {

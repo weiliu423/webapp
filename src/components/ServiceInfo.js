@@ -33,6 +33,7 @@ export class ServiceInfo extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
                 'Cache-Control': 'no-cache'
             }
         }).then(response => {
@@ -70,7 +71,7 @@ export class ServiceInfo extends Component {
                     }
                 });
             } else {
-                this.setState({output: ServiceInfo.uploadServiceButton()});
+                this.setState({output: this.uploadServiceButton()});
                 return false
             }
         }).catch(function (ex) {
@@ -84,11 +85,11 @@ export class ServiceInfo extends Component {
             </div>
         )
     }
-     static uploadServiceButton(){
+    uploadServiceButton(){
          return(
              <div className="text-center">
                  No services submitted, be the first one !
-                <a href="/webapp/uploadservice"> <button className="btn btn-info btn-block my-4">Place your services</button></a>
+                <button className="btn btn-info btn-block my-4" onClick={this.props.loadUploadService}>Place your services</button>
              </div>
          )
      }

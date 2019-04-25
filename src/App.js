@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-
+import { Button } from "mdbreact";
 import NavbarPage from './components/Header';
 import NavbarPageLog from './components/HeaderLogged';
 import ServiceCard from './components/ServiceCard';
@@ -24,8 +24,11 @@ export default class App extends Component {
             Login: false,
             SignUp: false,
             CoursePage: false,
-            CategoryListPage: false
+            Repairs: false,
+            CategoryListPage: false,
+            username:""
         };
+        this.checkLogout =  this.checkLogout.bind(this);
         this.checkLog = this.checkLog.bind(this);
         this.loadHeader = this.loadHeader.bind(this);
         this.loadHome = this.loadHome.bind(this);
@@ -35,8 +38,11 @@ export default class App extends Component {
         this.loadSignUp = this.loadSignUp.bind(this);
         this.loadCoursePage = this.loadCoursePage.bind(this);
         this.loadCategoryListPage = this.loadCategoryListPage.bind(this);
+        this.loadRepairsPage  = this.loadRepairsPage.bind(this);
+        this.setUsername = this.setUsername.bind(this);
     }
-    componentDidMount() {
+
+    componentWillMount() {
         this.loadHeader();
     }
 
@@ -49,6 +55,7 @@ export default class App extends Component {
             Login: false,
             SignUp: false,
             CoursePage: false,
+            Repairs: false,
             CategoryListPage: false
         });
     }
@@ -61,6 +68,7 @@ export default class App extends Component {
             Login: false,
             SignUp: false,
             CoursePage: false,
+            Repairs: false,
             CategoryListPage: false
         });
     }
@@ -73,6 +81,7 @@ export default class App extends Component {
             Login: false,
             SignUp: false,
             CoursePage: false,
+            Repairs: false,
             CategoryListPage: false
         });
     }
@@ -85,6 +94,7 @@ export default class App extends Component {
             Login: true,
             SignUp: false,
             CoursePage: false,
+            Repairs: false,
             CategoryListPage: false
         });
     }
@@ -92,11 +102,12 @@ export default class App extends Component {
         this.setState({
             default: false,
             Home: false,
-            UploadService: true,
+            UploadService: false,
             Tutor: false,
             Login: false,
             SignUp: true,
             CoursePage: false,
+            Repairs: false,
             CategoryListPage: false
         });
     }
@@ -109,6 +120,7 @@ export default class App extends Component {
             Login: false,
             SignUp: false,
             CoursePage: true,
+            Repairs: false,
             CategoryListPage: false
         });
     }
@@ -121,33 +133,84 @@ export default class App extends Component {
             Login: false,
             SignUp: false,
             CoursePage: false,
+            Repairs: false,
             CategoryListPage: true
         });
     }
-
-    checkLog(check){
+    loadRepairsPage(){
         this.setState({
-            isLogged: check
+            default: false,
+            Home: false,
+            UploadService: false,
+            Tutor: false,
+            Login: false,
+            SignUp: false,
+            CoursePage: false,
+            Repairs: true,
+            CategoryListPage: false
         });
+    }
+    setUsername(name){
+        this.setState({
+            username: name
+        });
+    }
+    checkLogout(){
+        console.log(" log out: "+this.state.isLogged );
+        this.setState({
+            isLogged: false
+        });
+        console.log(" log out: "+this.state.isLogged );
+        if(this.state.isLogged === false) {
+            console.log("loaded log out + false");
+            this.loadHeader();
+            this.loadHome();
+        }
+    }
+    checkLog(){
+        if(this.state.isLogged === false)
+        this.setState({
+            isLogged: true
+        });
+        if(this.state.isLogged === true && this.state.username !== ""){
+            console.log("loaded login + true");
+            this.loadHeader();
+            this.loadHome();
+        }
     }
     loadHeader(){
-        this.setState({
-            NavBarChange: <NavbarPage
-                loadHome={this.loadHome}
-                loadUploadService={this.loadUploadService}
-                loadTutor={this.loadTutor}
-                loadLogin={this.loadLogin}
-                loadSignUp={this.loadSignUp}
-                loadCoursePage={this.loadCoursePage}
-                loadCategoryListPage={this.loadCategoryListPage}/>
-        });
+        if(this.state.isLogged !== true){
+            this.setState({
+                NavBarChange: <NavbarPage
+                    username={this.state.username}
+                    loadHome={this.loadHome}
+                    loadUploadService={this.loadUploadService}
+                    loadLogin={this.loadLogin}
+                    loadSignUp={this.loadSignUp}
+                    loadCategoryListPage={this.loadCategoryListPage}/>
+            });
+        }else{
+            this.setState({
+                NavBarChange: <NavbarPageLog
+                    username={this.state.username}
+                    checkLogout ={this.checkLogout}
+                    loadHome={this.loadHome}
+                    loadUploadService={this.loadUploadService}
+                    loadLogin={this.loadLogin}
+                    loadSignUp={this.loadSignUp}
+                    loadCategoryListPage={this.loadCategoryListPage}/>
+            });
+        }
     }
+
     Home = () => (
         <Fragment>
             {this.state.NavBarChange}
             <SearchPage />
             <div className="container mb-10">
-                <ServiceCard/>
+                <ServiceCard loadCoursePage={this.loadCoursePage}
+                             loadTutor={this.loadTutor}
+                             loadRepairs={this.loadRepairsPage}/>
             </div>
             <FooterPage/>
         </Fragment>
@@ -156,16 +219,17 @@ export default class App extends Component {
         <Fragment>
             {this.state.NavBarChange}
             <div className="container mb-10">
-                <Uploader />
+                <Uploader username={this.state.username}/>
             </div>
             <FooterPage/>
         </Fragment>
     );
     Tutor = () => (
         <Fragment>
-            <NavbarPage />
+            {this.state.NavBarChange}
             <SearchPage />
-            <ServiceInfo category={"Tutors"}/>
+            <ServiceInfo category={"Tutors"}
+                         loadUploadService={this.loadUploadService}/>
             <FooterPage/>
         </Fragment>
     );
@@ -173,7 +237,7 @@ export default class App extends Component {
         <Fragment>
             {this.state.NavBarChange}
             <div className="container">
-                <LoginFormPage checkLog ={this.checkLog} />
+                <LoginFormPage checkLog ={this.checkLog} setUsername={this.setUsername} />
             </div>
             <FooterPage/>
         </Fragment>
@@ -182,7 +246,7 @@ export default class App extends Component {
         <Fragment>
             {this.state.NavBarChange}
             <div className="container">
-                <SignFormPage />
+                <SignFormPage checkLog ={this.checkLog} setUsername={this.setUsername}/>
             </div>
             <FooterPage/>
         </Fragment>
@@ -195,11 +259,45 @@ export default class App extends Component {
             <FooterPage/>
         </Fragment>
     );
+    Repairs = () => (
+        <Fragment>
+            {this.state.NavBarChange}
+            <SearchPage />
+            <ServiceInfo category={"Repairs"}/>
+            <FooterPage/>
+        </Fragment>
+    );
+    Travel = () => (
+        <Fragment>
+            {this.state.NavBarChange}
+            <SearchPage />
+            <ServiceInfo category={"Travel"}/>
+            <FooterPage/>
+        </Fragment>
+    );
+    Wellness = () => (
+        <Fragment>
+            {this.state.NavBarChange}
+            <SearchPage />
+            <ServiceInfo category={"Wellness"}/>
+            <FooterPage/>
+        </Fragment>
+    );
+    Electrician = () => (
+        <Fragment>
+            {this.state.NavBarChange}
+            <SearchPage />
+            <ServiceInfo category={"Electrician"}/>
+            <FooterPage/>
+        </Fragment>
+    );
     CategoryListPage = () => (
         <Fragment>
             {this.state.NavBarChange}
             <div className="container mb-10">
-                <CategoryList />
+                <CategoryList  loadCoursePage={this.loadCoursePage}
+                               loadTutor={this.loadTutor}
+                               loadRepairs={this.loadRepairsPage}/>
             </div>
             <FooterPage/>
         </Fragment>
@@ -217,9 +315,23 @@ export default class App extends Component {
             );
         }else if(this.state.UploadService === true)
         {
-            return (
-                this.UploadService()
-            );
+            if(this.state.isLogged === true){
+                return (
+                    this.UploadService()
+                );
+            }else{
+                return (
+                    <Fragment>
+                        {this.state.NavBarChange}
+                        <div className="container mb-10 center-block">
+                            <h3 className={"text-center mt-10"}>Please login first before upload your services!</h3>
+                            <Button className={"btn btn-info btn-block my-4"} onClick={this.loadLogin}>Login</Button>
+                        </div>
+                        <FooterPage/>
+                    </Fragment>
+                )
+            }
+
         }else if(this.state.Tutor)
         {
             return (
@@ -244,6 +356,11 @@ export default class App extends Component {
         {
             return (
                 this.CategoryListPage()
+            );
+        }else if(this.state.Repairs)
+        {
+            return (
+                this.Repairs()
             );
         }
 

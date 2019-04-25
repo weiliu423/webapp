@@ -12,10 +12,6 @@ class NavbarPage extends Component {
     toggleCollapse = () => {
         this.setState({ isOpen: !this.state.isOpen });
     };
-    toggleClicked = () => {
-        console.log("in header "+ this.state.clicked);
-        this.setState({ clicked: !this.state.clicked });
-    };
     render() {
         return (
             <MDBNavbar color="blue" dark expand="md">
@@ -26,28 +22,24 @@ class NavbarPage extends Component {
                 <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
                     <MDBNavbarNav left>
                         <MDBNavItem active>
-                            <button type="button" className="btn btn-link" onClick={this.props.loadHome}>Home</button>
+                            <button type="button" className="btn btn-link navBtn " onClick={this.props.loadHome}>Home</button>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <button type="button" className="btn btn-link" onClick={this.props.loadUploadService}>Place your services</button>
+                            <button type="button" className="btn btn-link navBtn" onClick={this.props.loadUploadService}>Place your services</button>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <MDBNavLink to="/servicelist" onClick={this.toggleClicked}>Services</MDBNavLink>
+                            <button type="button" className="btn btn-link navBtn" onClick={this.props.loadCategoryListPage}>Services</button>
                         </MDBNavItem>
                     </MDBNavbarNav>
                     <MDBNavbarNav right>
                         <MDBNavItem>
-                            <MDBNavLink to="#!">Download App</MDBNavLink>
+                            <button type="button" className="btn btn-link navBtn" onClick={this.props.loadLogin}>Download APP!</button>
                         </MDBNavItem>
                         <MDBNavItem>
                             <MDBDropdown>
-                                <MDBDropdownToggle nav caret>
-                                    <MDBIcon icon="user" />
-                                </MDBDropdownToggle>
-                                <MDBDropdownMenu className="dropdown-default" right>
-                                    <MDBDropdownItem href="/webapp/login">Login</MDBDropdownItem>
-                                    <MDBDropdownItem href="/webapp/signup">Sign up</MDBDropdownItem>
-                                </MDBDropdownMenu>
+                                    <button type="button" className="btn btn-link navBtn" onClick={this.props.loadLogin}>Login</button>
+                                     |
+                                    <button type="button" className="btn btn-link navBtn" onClick={this.props.loadSignUp}>Sign up</button>
                             </MDBDropdown>
                         </MDBNavItem>
                     </MDBNavbarNav>

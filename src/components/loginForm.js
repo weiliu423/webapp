@@ -71,7 +71,8 @@ export default class LoginFormPage extends React.Component {
                                     redirect: true
                                 });
                             }.bind(this), 2000);
-                            // eslint-disable-next-line react/jsx-no-undef
+                            console.log("redirect "+ this.state.redirect);
+                            this.props.setUsername(this.state.username);
                             this.loggedin(this.state.redirect);
                             return true;
                         } else {
