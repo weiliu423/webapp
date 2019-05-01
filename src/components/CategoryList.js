@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from "react";
 import { MDBListGroup, MDBListGroupItem, MDBContainer } from "mdbreact";
-import NavbarPage from "../App";
 
 export class CategoryList extends Component {
     constructor(props) {
@@ -29,15 +28,15 @@ export class CategoryList extends Component {
                                                                                  aria-hidden="true"/>Repairs</p></a></MDBListGroupItem>
                         </div>
                         <div className="list-group-item">
-                            <MDBListGroupItem href="#"><a><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 grey p-3 white-text rounded "
+                            <MDBListGroupItem><a><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 grey p-3 white-text rounded "
                                                                                  aria-hidden="true"/>Travel</p></a></MDBListGroupItem>
                         </div>
                         <div className="list-group-item">
-                            <MDBListGroupItem href="#"><a><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 mr-4 cyan p-3 white-text rounded"
+                            <MDBListGroupItem><a><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 mr-4 cyan p-3 white-text rounded"
                                                                                  aria-hidden="true"/>Wellness</p></a></MDBListGroupItem>
                         </div>
                         <div className="list-group-item">
-                            <MDBListGroupItem href="#"><a><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 mr-4 yellow p-3 white-text rounded"
+                            <MDBListGroupItem><a><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 mr-4 yellow p-3 white-text rounded"
                                                                                  aria-hidden="true"/>Electrician</p></a></MDBListGroupItem>
                         </div>
                     </div>

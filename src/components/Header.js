@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
-    MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, Button } from "mdbreact";
+import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavbarToggler, MDBCollapse, MDBDropdown} from "mdbreact";
 
 class NavbarPage extends Component {
     state = {

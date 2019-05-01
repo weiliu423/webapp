@@ -154,6 +154,7 @@ export default class App extends Component {
         this.setState({
             username: name
         });
+        alert("logged in as " + this.state.username);
     }
     checkLogout(){
         console.log(" log out: "+this.state.isLogged );

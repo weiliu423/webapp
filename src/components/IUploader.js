@@ -141,7 +141,7 @@ export default class Uploader extends Component {
                         return false
                     }
                 }).catch(function (ex) {
-                    alert('Error occurred: ' + ex);
+                  //  alert('Error occurred: ' + ex);
                 });
             }
 
