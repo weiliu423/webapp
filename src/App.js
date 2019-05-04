@@ -18,6 +18,7 @@ export default class App extends Component {
             isLogged: false,
             NavBarChange: "",
             default: true,
+            loadPageName: '',
             Home: false,
             UploadService: false,
             Tutor: false,
@@ -111,6 +112,11 @@ export default class App extends Component {
             CategoryListPage: false
         });
     }
+    loadPage(name){
+        this.setState({
+            loadPageName: name
+        });
+    }
     loadCoursePage(){
         this.setState({
             default: false,
@@ -154,7 +160,6 @@ export default class App extends Component {
         this.setState({
             username: name
         });
-        alert("logged in as " + this.state.username);
     }
     checkLogout(){
         console.log(" log out: "+this.state.isLogged );
@@ -256,7 +261,7 @@ export default class App extends Component {
         <Fragment>
             {this.state.NavBarChange}
             <SearchPage />
-            <ServiceInfo category={"Courses"}/>
+            <ServiceInfo category={this.state.loadPageName}/>
             <FooterPage/>
         </Fragment>
     );
@@ -296,7 +301,8 @@ export default class App extends Component {
         <Fragment>
             {this.state.NavBarChange}
             <div className="container mb-10">
-                <CategoryList  loadCoursePage={this.loadCoursePage}
+                <CategoryList  loadPage={this.loadPage}
+                               loadCoursePage={this.loadCoursePage}
                                loadTutor={this.loadTutor}
                                loadRepairs={this.loadRepairsPage}/>
             </div>

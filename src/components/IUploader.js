@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import request from 'superagent';
 import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
 import {StyledDropZone }  from 'react-drop-zone'
-
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 const CLOUDINARY_UPLOAD_PRESET = 'lshserviceupload';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/predator423/image/upload/';
@@ -20,7 +20,8 @@ export default class Uploader extends Component {
             email: '',
             phone: '',
             type: 'Choose a category',
-            submitted: false
+            submitted: false,
+            country: '', region: ''
         };
         this.handletitleChange = this.handletitleChange.bind(this);
         this.handledescriptionChange = this.handledescriptionChange.bind(this);
@@ -28,7 +29,13 @@ export default class Uploader extends Component {
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.onShow = this.onShow.bind(this);
     }
+    selectCountry (val) {
+        this.setState({ country: val });
+    }
 
+    selectRegion (val) {
+        this.setState({ region: val });
+    }
     onShow = ()=> {
         this.setState({ show: true })
     };
@@ -93,7 +100,9 @@ export default class Uploader extends Component {
                     "\nLinkAccountId:" + 1 +
                     "\nDescription:" + this.state.description +
                     "\nAccountName:" + this.props.username +
-                    "\nImageLink: " + this.state.uploadedFileCloudinaryUrl);
+                    "\nImageLink: " + this.state.uploadedFileCloudinaryUrl +
+                    "\nServiceLocation: " + this.state.region + ", " + this.state.country
+                );
                 this.setState({result: "Validating, Please Wait. Thank You\n"});
                 fetch('https://serviceinfo.azurewebsites.net/createService', {
                     method: 'POST',
@@ -107,7 +116,8 @@ export default class Uploader extends Component {
                         LinkAccountId: 2,
                         Description: this.state.description,
                         ImageLink: this.state.uploadedFileCloudinaryUrl,
-                        AccountName: this.props.username
+                        AccountName: this.props.username,
+                        ServiceLocation: this.state.region + ", " + this.state.country
                     })
                 }).then(response => {
                     if (response.ok) {
@@ -124,6 +134,8 @@ export default class Uploader extends Component {
                                         email: '',
                                         phone: '',
                                         type: '',
+                                        country: '',
+                                        region: ''
                                     });
                                 }.bind(this), 2000);
                                 return true
@@ -189,14 +201,16 @@ export default class Uploader extends Component {
         }
     };
     handleUploadSubmit(event) {
-        if(this.state.titleService !==  '' && this.state.description !==  '' && this.state.type !== 'Choose a category' ) {
+        if(this.state.titleService !==  '' && this.state.description !==  ''
+            && this.state.type !== 'Choose a category' && this.state.country !==  '' && this.state.region !==  '' ) {
             this.handleImageUpload(this.state.uploadedFile);
         }else {
-            alert('Error occurred: No user input');
+            alert('Error occurred: Missing user input');
         }
         event.preventDefault();
     }
     render() {
+        const { country, region } = this.state;
         return (
             <div className="mt-10 ml-10 mr-10 mb-10">
             <form className="text-center border border-light p-5 mt-10" onSubmit={this.handleUploadSubmit}>
@@ -215,6 +229,15 @@ export default class Uploader extends Component {
                                     <MDBDropdownItem value="Tutors" onClick={this.handleTypeChange}>Tutor</MDBDropdownItem>
                                     <MDBDropdownItem value="Repairs" onClick={this.handleTypeChange}>Repairs</MDBDropdownItem>
                                 </MDBDropdownMenu>
+                                <MDBDropdown>
+                                    <CountryDropdown className={"dropdown-item"}
+                                                     value={country}
+                                                     onChange={(val) => this.selectCountry(val)} />
+                                    <RegionDropdown className={"dropdown-item"}
+                                                    country={country}
+                                                    value={region}
+                                                    onChange={(val) => this.selectRegion(val)} />
+                                </MDBDropdown>
                             </MDBDropdown>
                             <div className="md-form">
                                 <label htmlFor="form7">DESCRIPTION :</label>
