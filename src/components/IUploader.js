@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import request from 'superagent';
-import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
+import {MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBListGroupItem} from "mdbreact";
 import {StyledDropZone }  from 'react-drop-zone'
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
 const CLOUDINARY_UPLOAD_PRESET = 'lshserviceupload';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/predator423/image/upload/';
+const uuidv4 = require('uuid/v4');
+
 
 export default class Uploader extends Component {
     constructor(props) {
@@ -21,6 +23,7 @@ export default class Uploader extends Component {
             phone: '',
             type: 'Choose a category',
             submitted: false,
+            output: [],
             country: '', region: ''
         };
         this.handletitleChange = this.handletitleChange.bind(this);
@@ -28,11 +31,11 @@ export default class Uploader extends Component {
         this.handleUploadSubmit = this.handleUploadSubmit.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.onShow = this.onShow.bind(this);
+        this.loadAllCategory();
     }
     selectCountry (val) {
         this.setState({ country: val });
     }
-
     selectRegion (val) {
         this.setState({ region: val });
     }
@@ -79,6 +82,55 @@ export default class Uploader extends Component {
             alert('Error occurred: Max character reached');
         }
 
+    }
+    loadAllCategory(){
+        fetch('https://serviceinfo.azurewebsites.net/getAllCategories', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Cache-Control': 'no-cache'
+            }
+        }).then(response => {
+            if (response.ok) {
+                response.json().then(json => {
+                    if (json.Success === true) {
+                        this.state= {
+                            output: []
+                        };
+                        let view = this.state.output;
+                        const  test = [];
+                        json.Data.map(function (name) {
+                            test.push(name);
+                            return name;
+                        });
+                        for(let i = 0; i < test.length; i++)
+                        {
+                            /*this.setState({
+                                output:test[i]
+                            });*/
+                            view.push(this.categoryRows(test[i]));
+                        }
+                        this.setState({
+                            output: view
+                        });
+                        return true
+                    } else {
+                        return false
+                    }
+                });
+            } else {
+                return false
+            }
+        }).catch(function (ex) {
+            alert('Error occur: ' + ex);
+        });
+    };
+    categoryRows(name){
+        return(
+            <MDBDropdownItem value={name} onClick={this.handleTypeChange}>{name}</MDBDropdownItem>
+        )
     }
     handleImageUpload(file) {
         let upload = request.post(CLOUDINARY_UPLOAD_URL)
@@ -225,9 +277,7 @@ export default class Uploader extends Component {
                                     {this.state.type}
                                 </MDBDropdownToggle>
                                 <MDBDropdownMenu basic>
-                                    <MDBDropdownItem value="Courses" onClick={this.handleTypeChange}>Course</MDBDropdownItem>
-                                    <MDBDropdownItem value="Tutors" onClick={this.handleTypeChange}>Tutor</MDBDropdownItem>
-                                    <MDBDropdownItem value="Repairs" onClick={this.handleTypeChange}>Repairs</MDBDropdownItem>
+                                    {this.state.output}
                                 </MDBDropdownMenu>
                                 <MDBDropdown>
                                     <CountryDropdown className={"dropdown-item"}

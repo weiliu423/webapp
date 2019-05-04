@@ -34,55 +34,35 @@ export default class App extends Component {
         this.loadHeader = this.loadHeader.bind(this);
         this.loadHome = this.loadHome.bind(this);
         this.loadUploadService = this.loadUploadService.bind(this);
-        this.loadTutor = this.loadTutor.bind(this);
+        this.loadPage = this.loadPage.bind(this);
         this.loadLogin = this.loadLogin.bind(this);
         this.loadSignUp = this.loadSignUp.bind(this);
-        this.loadCoursePage = this.loadCoursePage.bind(this);
         this.loadCategoryListPage = this.loadCategoryListPage.bind(this);
-        this.loadRepairsPage  = this.loadRepairsPage.bind(this);
         this.setUsername = this.setUsername.bind(this);
     }
 
     componentWillMount() {
         this.loadHeader();
     }
-
     loadHome(){
         this.setState({
-            default: false,
             Home: true,
+            loadPageName: '',
+            default: false,
             UploadService: false,
-            Tutor: false,
             Login: false,
             SignUp: false,
-            CoursePage: false,
-            Repairs: false,
             CategoryListPage: false
         });
     }
     loadUploadService(){
         this.setState({
             default: false,
+            loadPageName: '',
             Home: false,
             UploadService: true,
-            Tutor: false,
             Login: false,
             SignUp: false,
-            CoursePage: false,
-            Repairs: false,
-            CategoryListPage: false
-        });
-    }
-    loadTutor(){
-        this.setState({
-            default: false,
-            Home: false,
-            UploadService: false,
-            Tutor: true,
-            Login: false,
-            SignUp: false,
-            CoursePage: false,
-            Repairs: false,
             CategoryListPage: false
         });
     }
@@ -91,11 +71,9 @@ export default class App extends Component {
             default: false,
             Home: false,
             UploadService: false,
-            Tutor: false,
             Login: true,
             SignUp: false,
-            CoursePage: false,
-            Repairs: false,
+            loadPageName: '',
             CategoryListPage: false
         });
     }
@@ -104,29 +82,20 @@ export default class App extends Component {
             default: false,
             Home: false,
             UploadService: false,
-            Tutor: false,
             Login: false,
             SignUp: true,
-            CoursePage: false,
-            Repairs: false,
+            loadPageName: '',
             CategoryListPage: false
         });
     }
     loadPage(name){
         this.setState({
-            loadPageName: name
-        });
-    }
-    loadCoursePage(){
-        this.setState({
+            loadPageName: name,
             default: false,
             Home: false,
             UploadService: false,
-            Tutor: false,
             Login: false,
             SignUp: false,
-            CoursePage: true,
-            Repairs: false,
             CategoryListPage: false
         });
     }
@@ -135,25 +104,10 @@ export default class App extends Component {
             default: false,
             Home: false,
             UploadService: false,
-            Tutor: false,
+            loadPageName: '',
             Login: false,
             SignUp: false,
-            CoursePage: false,
-            Repairs: false,
             CategoryListPage: true
-        });
-    }
-    loadRepairsPage(){
-        this.setState({
-            default: false,
-            Home: false,
-            UploadService: false,
-            Tutor: false,
-            Login: false,
-            SignUp: false,
-            CoursePage: false,
-            Repairs: true,
-            CategoryListPage: false
         });
     }
     setUsername(name){
@@ -214,9 +168,7 @@ export default class App extends Component {
             {this.state.NavBarChange}
             <SearchPage />
             <div className="container mb-10">
-                <ServiceCard loadCoursePage={this.loadCoursePage}
-                             loadTutor={this.loadTutor}
-                             loadRepairs={this.loadRepairsPage}/>
+                <ServiceCard loadPage={this.loadPage}/>
             </div>
             <FooterPage/>
         </Fragment>
@@ -227,15 +179,6 @@ export default class App extends Component {
             <div className="container mb-10">
                 <Uploader username={this.state.username}/>
             </div>
-            <FooterPage/>
-        </Fragment>
-    );
-    Tutor = () => (
-        <Fragment>
-            {this.state.NavBarChange}
-            <SearchPage />
-            <ServiceInfo category={"Tutors"}
-                         loadUploadService={this.loadUploadService}/>
             <FooterPage/>
         </Fragment>
     );
@@ -257,7 +200,16 @@ export default class App extends Component {
             <FooterPage/>
         </Fragment>
     );
-    CoursePage = () => (
+    CategoryListPage = () => (
+        <Fragment>
+            {this.state.NavBarChange}
+            <div className="container mb-10">
+                <CategoryList  loadPage={this.loadPage}/>
+            </div>
+            <FooterPage/>
+        </Fragment>
+    );
+    servicePage = () => (
         <Fragment>
             {this.state.NavBarChange}
             <SearchPage />
@@ -265,50 +217,8 @@ export default class App extends Component {
             <FooterPage/>
         </Fragment>
     );
-    Repairs = () => (
-        <Fragment>
-            {this.state.NavBarChange}
-            <SearchPage />
-            <ServiceInfo category={"Repairs"}/>
-            <FooterPage/>
-        </Fragment>
-    );
-    Travel = () => (
-        <Fragment>
-            {this.state.NavBarChange}
-            <SearchPage />
-            <ServiceInfo category={"Travel"}/>
-            <FooterPage/>
-        </Fragment>
-    );
-    Wellness = () => (
-        <Fragment>
-            {this.state.NavBarChange}
-            <SearchPage />
-            <ServiceInfo category={"Wellness"}/>
-            <FooterPage/>
-        </Fragment>
-    );
-    Electrician = () => (
-        <Fragment>
-            {this.state.NavBarChange}
-            <SearchPage />
-            <ServiceInfo category={"Electrician"}/>
-            <FooterPage/>
-        </Fragment>
-    );
-    CategoryListPage = () => (
-        <Fragment>
-            {this.state.NavBarChange}
-            <div className="container mb-10">
-                <CategoryList  loadPage={this.loadPage}
-                               loadCoursePage={this.loadCoursePage}
-                               loadTutor={this.loadTutor}
-                               loadRepairs={this.loadRepairsPage}/>
-            </div>
-            <FooterPage/>
-        </Fragment>
-    );
+
+
     render() {
         if(this.state.default)
         {
@@ -339,11 +249,6 @@ export default class App extends Component {
                 )
             }
 
-        }else if(this.state.Tutor)
-        {
-            return (
-                this.Tutor()
-            );
         }else if(this.state.Login)
         {
             return (
@@ -354,20 +259,15 @@ export default class App extends Component {
             return (
                 this.SignUp()
             );
-        }else if(this.state.CoursePage)
+        }else if(this.state.loadPageName !== '')
         {
             return (
-                this.CoursePage()
+                this.servicePage()
             );
         }else if(this.state.CategoryListPage)
         {
             return (
                 this.CategoryListPage()
-            );
-        }else if(this.state.Repairs)
-        {
-            return (
-                this.Repairs()
             );
         }
 

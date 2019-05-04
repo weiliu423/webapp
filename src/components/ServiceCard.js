@@ -33,7 +33,7 @@ export default class ServiceCard extends Component {
                             <CardBody>
                                 <CardTitle className="h4-responsive mb-2s text-secondary">Courses</CardTitle>
                                 <div className="d-flex justify-content-center">
-                                    <Button data-toggle="modal" onClick={this.props.loadCoursePage} color="success" size="sm" className="font-weight-light">View Services</Button>
+                                    <Button data-toggle="modal" onClick={()=>this.props.loadPage("Courses")} color="success" size="sm" className="font-weight-light">View Services</Button>
                                 </div>
                             </CardBody>
                         </Card>
@@ -46,7 +46,7 @@ export default class ServiceCard extends Component {
                             <CardBody>
                                 <CardTitle className="h4-responsive mb-2s text-secondary">Tutors</CardTitle>
                                 <div className="d-flex justify-content-center">
-                                    <Button data-toggle="modal" onClick={this.props.loadTutor} color="success" size="sm" className="font-weight-light">View Services</Button>
+                                    <Button data-toggle="modal" onClick={()=>this.props.loadPage("Tutors")} color="success" size="sm" className="font-weight-light">View Services</Button>
                                 </div>
                             </CardBody>
                         </Card>
@@ -59,7 +59,7 @@ export default class ServiceCard extends Component {
                             <CardBody>
                                 <CardTitle className="h4-responsive mb-2s text-secondary">Repairs</CardTitle>
                                 <div className="d-flex justify-content-center">
-                                    <Button data-toggle="modal" onClick={this.props.loadRepairs} color="success" size="sm" className="font-weight-light">View Services</Button>
+                                    <Button data-toggle="modal" onClick={()=>this.props.loadPage("Repairs")} color="success" size="sm" className="font-weight-light">View Services</Button>
                                 </div>
                             </CardBody>
                         </Card>
@@ -74,7 +74,7 @@ export default class ServiceCard extends Component {
                                 <CardBody>
                                     <CardTitle className="h4-responsive mb-2s text-secondary">Travel</CardTitle>
                                     <div className="d-flex justify-content-center">
-                                        <Button color="success" size="sm" className="font-weight-light">View Services</Button>
+                                        <Button data-toggle="modal" onClick={()=>this.props.loadPage("Travel")} color="success" size="sm" className="font-weight-light">View Services</Button>
                                     </div>
                                 </CardBody>
                             </Card>
@@ -87,7 +87,7 @@ export default class ServiceCard extends Component {
                                 <CardBody>
                                     <CardTitle className="h4-responsive mb-2s text-secondary">Wellness</CardTitle>
                                     <div className="d-flex justify-content-center">
-                                        <Button color="success" size="sm" className="font-weight-light">View Services</Button>
+                                        <Button data-toggle="modal" onClick={()=>this.props.loadPage("Wellness")} color="success" size="sm" className="font-weight-light">View Services</Button>
                                     </div>
                                 </CardBody>
                             </Card>
@@ -100,7 +100,7 @@ export default class ServiceCard extends Component {
                                 <CardBody>
                                     <CardTitle className="h4-responsive mb-2s text-secondary">Electrician</CardTitle>
                                     <div className="d-flex justify-content-center">
-                                        <Button color="success" size="sm" className="font-weight-light">View Services</Button>
+                                        <Button data-toggle="modal" onClick={()=>this.props.loadPage("Electrician")} color="success" size="sm" className="font-weight-light">View Services</Button>
                                     </div>
                                 </CardBody>
                             </Card>

@@ -9,7 +9,6 @@ export class CategoryList extends Component {
         this.state = {
             linkName: '',
             previousName: '',
-            listOfName: [],
             output: [],
             checkService: false,
             result: '',
@@ -24,7 +23,7 @@ export class CategoryList extends Component {
     loadingBar(){
         // eslint-disable-next-line react/no-direct-mutation-state
         this.state= {
-            output: <div><label className={"error"}>Please wait while loading service information, Thank you!</label>
+            output: <div className={"text-center"}><label className={"error"}>Please wait while loading service information, Thank you!</label>
                 <br /><SpinnerPage /></div>
         };
         console.log(this.state.output);
@@ -61,20 +60,18 @@ export class CategoryList extends Component {
                         this.state= {
                             output: []
                         };
-
                         let view = this.state.output;
-                        let list = this.state.listOfName;
-                        list = json.Data.split(',');
-
-                        for(let i = 0; i < json.Data.length; i++)
+                        const  test = [];
+                       json.Data.map(function (name) {
+                            test.push(name);
+                            return name;
+                        });
+                       for(let i = 0; i < test.length; i++)
                         {
-
-                            alert(this.state.listOfName[i]);
                                 this.setState({
-                                    listName:this.state.listOfName[i]
+                                    listName:test[i]
                                 });
-                                view.push(this.categoryRows());
-                                // json.Data[i].serviceInfo[x].ImageLink, json.Data[i].serviceInfo[x].Name, json.Data[i].serviceInfo[x].Description, json.Data[i].serviceInfo[x].CreateDate)
+                                view.push(this.categoryRows(test[i]));
                         }
                         setTimeout(function () {
                             this.setState({result: "Success"});
@@ -100,45 +97,21 @@ export class CategoryList extends Component {
             alert('Error occur: ' + ex);
         });
     };
-    categoryRows(){
+    categoryRows(name){
         return(
             <div key={uuidv4()} className="list-group-item">
-                <MDBListGroupItem data-toggle="modal" onClick={this.props.loadPage("Courses")}><a><p className="mb-0">
+                <MDBListGroupItem data-toggle="modal" onClick={() => this.props.loadPage(name)}><a><p className="mb-0">
                     <i className="fa fa-arrow-right fa-2x mr-4 red p-3 white-text rounded " aria-hidden="true"/>{this.state.listName}</p></a></MDBListGroupItem>
             </div>
         )
     }
-     CategoryList = () => {
+    CategoryList = () => {
      return (
         <Fragment>
             <MDBContainer>
                 <MDBListGroup>
                     <div className="list-group-flush ml-10 mr-10">
                         {this.state.output}
-                       {/* <div className="list-group-item">
-                            <MDBListGroupItem data-toggle="modal" onClick={this.props.loadCoursePage}><a><p className="mb-0">
-                                <i className="fa fa-arrow-right fa-2x mr-4 red p-3 white-text rounded " aria-hidden="true"/>Courses</p></a></MDBListGroupItem>
-                        </div>
-                        <div className="list-group-item">
-                            <MDBListGroupItem data-toggle="modal" onClick={this.props.loadTutor}><a><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 mr-4 orange p-3 white-text rounded"
-                                                                                                          aria-hidden="true"/>Tutors</p></a></MDBListGroupItem>
-                        </div>
-                        <div className="list-group-item">
-                            <MDBListGroupItem data-toggle="modal" onClick={this.props.loadRepairs}><a><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 mr-4 green p-3 white-text rounded"
-                                                                                 aria-hidden="true"/>Repairs</p></a></MDBListGroupItem>
-                        </div>
-                        <div className="list-group-item">
-                            <MDBListGroupItem><a><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 grey p-3 white-text rounded "
-                                                                                 aria-hidden="true"/>Travel</p></a></MDBListGroupItem>
-                        </div>
-                        <div className="list-group-item">
-                            <MDBListGroupItem><a><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 mr-4 cyan p-3 white-text rounded"
-                                                                                 aria-hidden="true"/>Wellness</p></a></MDBListGroupItem>
-                        </div>
-                        <div className="list-group-item">
-                            <MDBListGroupItem><a><p className="mb-0"><i className="fa fa-arrow-right fa-2x mr-4 mr-4 yellow p-3 white-text rounded"
-                                                                                 aria-hidden="true"/>Electrician</p></a></MDBListGroupItem>
-                        </div>*/}
                     </div>
                 </MDBListGroup>
             </MDBContainer>
@@ -146,11 +119,9 @@ export class CategoryList extends Component {
         </Fragment>
     );
 };
-
     render() {
             return (
                 this.CategoryList()
             );
-
     }
 }
