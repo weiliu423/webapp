@@ -32,7 +32,7 @@ class NavbarPage extends Component {
                     </MDBNavbarNav>
                     <MDBNavbarNav right>
                         <MDBNavItem>
-                            <button type="button" className="btn btn-link navBtn" onClick={this.props.loadLogin}>Download APP!</button>
+                            <a target="_blank" href="https://drive.google.com/file/d/1Kf55JYw-IU8CrF9KT_LCV181ElhGITtd/view?usp=sharing" className="btn btn-link navBtn">Download APP!</a>
                         </MDBNavItem>
                         <MDBNavItem>
                             <MDBDropdown>

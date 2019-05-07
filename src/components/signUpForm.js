@@ -1,6 +1,7 @@
 import React from "react";
 
 import SpinnerPage from './SpinnerPage';
+import {MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle} from "mdbreact";
 
 
 export default class signFormPage extends React.Component {
@@ -12,6 +13,9 @@ export default class signFormPage extends React.Component {
             email: '',
             password: '',
             username: '',
+            phoneNo: '',
+            type: 'Account Type:',
+            isProvider: '',
             show: false
         };
 
@@ -20,6 +24,8 @@ export default class signFormPage extends React.Component {
         this.handleemailChange = this.handleemailChange.bind(this);
         this.handlepasswordChange = this.handlepasswordChange.bind(this);
         this.handleusernameChange = this.handleusernameChange.bind(this);
+        this.handlePhoneChange = this.handlePhoneChange.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -60,6 +66,11 @@ export default class signFormPage extends React.Component {
             email: event.target.value
         });
     }
+    handlePhoneChange(event) {
+        this.setState({
+            phoneNo: event.target.value
+        });
+    }
     handlepasswordChange(event) {
         this.setState({
             password: event.target.value
@@ -70,8 +81,23 @@ export default class signFormPage extends React.Component {
             username: event.target.value
         });
     }
+    handleTypeChange(event) {
+        this.setState({
+            type: event.target.value
+        });
+        if(event.target.value === "User"){
+            this.setState({
+                isProvider: '0'
+            });
+        }else {
+            this.setState({
+                isProvider: '1'
+            });
+        }
+    }
     handleSubmit(event) {
-        if(this.state.username !== ''|| this.state.password !== '' || this.state.fName !== '' || this.state.sName !== '' || this.state.email !== '') {
+        if(this.state.username !== ''|| this.state.password !== '' || this.state.fName !== '' || this.state.phoneNo !== ''
+            || this.state.sName !== '' || this.state.email !== '' || this.state.type !== 'Account Type:' ) {
             this.onShow();
             this.setState({result: "Validating, Please Wait. Thank You\n"});
             fetch('https://lshapi.azurewebsites.net/createNewAccount', {
@@ -85,6 +111,8 @@ export default class signFormPage extends React.Component {
                     Password: this.state.password,
                     FirstName: this.state.fName,
                     LastName: this.state.sName,
+                    PhoneNo: this.state.phoneNo,
+                    isProvider: this.state.isProvider,
                     Email: this.state.email
                 })
             }).then(response => {
@@ -124,28 +152,42 @@ export default class signFormPage extends React.Component {
         }
         event.preventDefault();
     }
-
     render() {
         return (
             <div className="mt-10">
             <form className="text-center border border-light p-5" onSubmit={this.handleSubmit}>
             <p className="h4 mb-4">Sign up</p>
-        <div className="form-row mb-4">
-            <div className="col">
-                <input type="text" id="defaultRegisterFormFirstName" className="form-control" placeholder="First name" value={this.state.fName} onChange={this.handlefNameChange}/>
-            </div>
-            <div className="col">
-                <input type="text" id="defaultRegisterFormLastName" className="form-control" placeholder="Last name" value={this.state.sName} onChange={this.handlesNameChange}/>
-            </div>
-        </div>
-        <input type="email" id="defaultRegisterFormEmail" className="form-control mb-4" placeholder="E-mail" value={this.state.email} onChange={this.handleemailChange}/>
-                <input type="username" id="defaultRegisterFormUsername" className="form-control mb-4" placeholder="Username" value={this.state.username} onChange={this.handleusernameChange}/>
-        <input type="password" id="defaultRegisterFormPassword" className="form-control" placeholder="Password"
-               aria-describedby="defaultRegisterFormPasswordHelpBlock" value={this.state.password} onChange={this.handlepasswordChange}/>
-        <small id="defaultRegisterFormPasswordHelpBlock" className="form-text text-muted mb-4">
-            At least 8 characters and 1 digit
-        </small>
-        <button className="btn btn-info my-4 btn-block" type="submit">Sign in</button>
+                <div className="form-row mb-4">
+                    <div className="col">
+                        <input type="text" id="defaultRegisterFormFirstName" className="form-control" placeholder="First name"
+                               value={this.state.fName} onChange={this.handlefNameChange}/>
+                    </div>
+                    <div className="col">
+                        <input type="text" id="defaultRegisterFormLastName" className="form-control" placeholder="Last name"
+                               value={this.state.sName} onChange={this.handlesNameChange}/>
+                    </div>
+                </div>
+                <MDBDropdown>
+                    <MDBDropdownToggle className="btn btn-info btn-block my-4" caret color="primary">
+                        {this.state.type}
+                    </MDBDropdownToggle>
+                    <MDBDropdownMenu basic>
+                        <MDBDropdownItem value="User" onClick={this.handleTypeChange}>User</MDBDropdownItem>
+                        <MDBDropdownItem value="Provider" onClick={this.handleTypeChange}>Provider</MDBDropdownItem>
+                    </MDBDropdownMenu>
+                </MDBDropdown>
+                <input type="email" id="defaultRegisterFormEmail" className="form-control mb-4" placeholder="E-mail"
+                       value={this.state.email} onChange={this.handleemailChange}/>
+                <input type="phone" id="defaultRegisterFormPhone" className="form-control mb-4" placeholder="Phone Number"
+                       value={this.state.phoneNo} onChange={this.handlePhoneChange}/>
+                <input type="username" id="defaultRegisterFormUsername" className="form-control mb-4" placeholder="Username"
+                       value={this.state.username} onChange={this.handleusernameChange}/>
+                <input type="password" id="defaultRegisterFormPassword" className="form-control" placeholder="Password"
+                       aria-describedby="defaultRegisterFormPasswordHelpBlock" value={this.state.password} onChange={this.handlepasswordChange}/>
+                <small id="defaultRegisterFormPasswordHelpBlock" className="form-text text-muted mb-4">
+                    At least 8 characters and 1 digit
+                </small>
+        <button className="btn btn-info my-4 btn-block" type="submit">Sign up</button>
                 <label className={"error"}>{this.state.result}</label>
                 <br />
                 {this.loading()}

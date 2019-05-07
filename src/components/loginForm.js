@@ -8,6 +8,7 @@ export default class LoginFormPage extends React.Component {
         this.state = {
             password: '',
             username: '',
+            isProvider: '',
             loginshow: false
         };
 
@@ -73,6 +74,7 @@ export default class LoginFormPage extends React.Component {
                             }.bind(this), 2000);
                             console.log("redirect "+ this.state.redirect);
                             this.props.setUsername(this.state.username);
+                            this.props.setProvider(json.Data.split(":")[1]);
                             this.loggedin(this.state.redirect);
                             return true;
                         } else {

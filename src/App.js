@@ -27,7 +27,8 @@ export default class App extends Component {
             CoursePage: false,
             Repairs: false,
             CategoryListPage: false,
-            username:""
+            username:"",
+            provider:""
         };
         this.checkLogout =  this.checkLogout.bind(this);
         this.checkLog = this.checkLog.bind(this);
@@ -39,6 +40,7 @@ export default class App extends Component {
         this.loadSignUp = this.loadSignUp.bind(this);
         this.loadCategoryListPage = this.loadCategoryListPage.bind(this);
         this.setUsername = this.setUsername.bind(this);
+        this.setProvider = this.setProvider.bind(this);
     }
 
     componentWillMount() {
@@ -115,6 +117,11 @@ export default class App extends Component {
             username: name
         });
     }
+    setProvider(name){
+        this.setState({
+            provider: name
+        });
+    }
     checkLogout(){
         console.log(" log out: "+this.state.isLogged );
         this.setState({
@@ -177,7 +184,7 @@ export default class App extends Component {
         <Fragment>
             {this.state.NavBarChange}
             <div className="container mb-10">
-                <Uploader username={this.state.username}/>
+                <Uploader username={this.state.username} isProvider={this.state.provider}/>
             </div>
             <FooterPage/>
         </Fragment>
@@ -186,7 +193,7 @@ export default class App extends Component {
         <Fragment>
             {this.state.NavBarChange}
             <div className="container">
-                <LoginFormPage checkLog ={this.checkLog} setUsername={this.setUsername} />
+                <LoginFormPage checkLog ={this.checkLog} setUsername={this.setUsername} setProvider={this.setProvider} />
             </div>
             <FooterPage/>
         </Fragment>
@@ -233,9 +240,22 @@ export default class App extends Component {
         }else if(this.state.UploadService === true)
         {
             if(this.state.isLogged === true){
-                return (
-                    this.UploadService()
-                );
+                if(this.state.provider === '1'){
+                    return (
+                        this.UploadService()
+                    );
+                }else {
+                    return (
+                        <Fragment>
+                            {this.state.NavBarChange}
+                            <div className="container mb-10 center-block">
+                                <h3 className={"text-center mt-10"}>Please login with provider account to upload your service!</h3>
+                            </div>
+                            <FooterPage/>
+                        </Fragment>
+                    );
+                }
+
             }else{
                 return (
                     <Fragment>
